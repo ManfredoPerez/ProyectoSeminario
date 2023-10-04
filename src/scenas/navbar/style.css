@@ -10,6 +10,11 @@ a {
 	text-decoration: none;
 }
 
+p {
+	text-decoration: none;
+	cursor: pointer;
+}
+
 li {
 	list-style: none;
 }
@@ -60,6 +65,9 @@ body{
 	scrollbar-width: none;
 }
 
+#sidebar::--webkit-scrollbar {
+	display: none;
+}
 
 
 #sidebar.hide {
@@ -73,6 +81,13 @@ body{
     display: flex;
     align-items: center;
     color: var(--blue);
+	position: sticky;
+	top: 0;
+	left: 0;
+	background: var(--light);
+	z-index: 500;
+	padding-bottom: 20px;
+	box-sizing: content-box;
 }
 
 #sidebar .brand .bx {
@@ -135,7 +150,24 @@ body{
 	overflow-x: hidden;
 }
 
+#sidebar .side-menu li p{
+    width: 100%;
+    height: 100%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    border-radius: 48px;
+    font-size: 16px;
+    color: var(--dark);
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+
 #sidebar.hide .side-menu li.active a {
+	color: var(--blue);
+}
+
+#sidebar.hide .side-menu li.active p {
 	color: var(--blue);
 }
 
@@ -144,7 +176,16 @@ body{
 	transition: width .3s ease;
 }
 
+#sidebar.hide .side-menu li p {
+	width: calc(48px - (4px *2));
+	transition: width .3s ease;
+}
+
 #sidebar .side-menu li a.logout {
+	color: var(--red);
+}
+
+#sidebar .side-menu li p.logout {
 	color: var(--red);
 }
 
@@ -152,7 +193,17 @@ body{
     color: var(--blue);
 }
 
+#sidebar .side-menu.top li p:hover {
+    color: var(--blue);
+}
+
 #sidebar .side-menu li a .bx {
+    min-width: calc(60px - ((4px + 6px) *2 ));
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar .side-menu li p .bx {
     min-width: calc(60px - ((4px + 6px) *2 ));
     display: flex;
     justify-content: center;
