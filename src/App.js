@@ -4,11 +4,14 @@ import express from 'express';
 import morgan from "morgan";
 
 const App = express();
+const cors = require('cors');
 
 // Settings
 App.set("port", 4000);
 // Middlewares
 App.use(morgan("dev"));
+app.use(express.json());
+app.use(cors());
 
 // function App() {
 //   return (
