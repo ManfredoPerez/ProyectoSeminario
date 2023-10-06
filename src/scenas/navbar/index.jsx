@@ -38,14 +38,14 @@ const Navbar = () => {
                 <li className="active">
                     <a  href="#usuario" onClick={() => setShowUserAdd(true)}>
                         <i className="bx bxs-user"></i>
-                        <span className="text">Agregar Usuario</span>
+                        <span className="text">Agregar Cargo</span>
                     </a>
                 </li>
-
+            
                 <li>
                     <a href="#cargo" onClick={() => setShowUserAdd(true)}>
                         <i className="bx bxs-user"></i>
-                        <span className="text">Agregar cargo</span>
+                        <span className="text">Agregar Dependencia</span>
                     </a>
                 </li>
 
@@ -53,14 +53,16 @@ const Navbar = () => {
                 <li>
                     <a href="#rol" onClick={() => setShowUserAdd(true)}>
                         <i className="bx bxs-dashboard"></i>
-                        <span className="text">Agregar rol</span>
+                        <span className="text">Agregar Usuario</span>
                     </a>
                 </li>
+
+
 
                 <li>
                     <a href="#producto">
                         <i className='bx bxs-folder'></i>
-                        <span className="text">Agregar producto</span>
+                        <span className="text">Agregar Articulos</span>
                     </a>
                 </li>
 
@@ -106,10 +108,10 @@ const Navbar = () => {
                 </a>
                 <a href="/home" className="nav-link"> <h4> <b>Tarjeta de Responsabilidad</b> </h4> </a>
                 <form action="#">
-                    <div className="form-input">
+                    {/* <div className="form-input">
                         <input type="search" placeholder="Buscar..."/>
                         <button type="submit" className="search-btn"><i className='bx bx-search-alt' ></i></button>
-                    </div>
+                    </div> */}
                 </form>
 
                 <input type="checkbox" id="switch-mode" hidden/>
