@@ -11,12 +11,12 @@ const Navbar = () => {
 
     const handleCargoClick = () => {
         setShowCargoAdd(true);
-        setShowUserAdd(false); // Oculta el contenido de Usuarios si estaba visible
+        setShowUserAdd(false);
     };
 
     const handleUserClick = () => {
         setShowUserAdd(true);
-        setShowCargoAdd(false); // Oculta el contenido de Cargo si estaba visible
+        setShowCargoAdd(false);
     };
     
     allSideMenu.forEach(item=> {
