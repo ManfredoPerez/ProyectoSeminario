@@ -1,0 +1,22 @@
+
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.btnAdd {
+    padding: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    background-color: cornflowerblue;
+    color: white;
+    position: absolute;
+    right: 50px;
+}
