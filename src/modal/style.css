@@ -26,12 +26,13 @@
   .modalContainer .title {
     display: inline-block;
     text-align: center;
-    margin-top: 10px;
+    margin-top: -10px;
   }
   
   .titleCloseBtn {
     display: flex;
     justify-content: flex-end;
+    margin-top: -50px;
   }
   
   .titleCloseBtn button {
