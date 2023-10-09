@@ -2,10 +2,22 @@ import "./style.css";
 import xelaImage from "../login/logoMuni.png"
 import UserAdd from "../usuarios";
 import { useState } from "react";
+import CargoAdd from "../cargo";
 
 const Navbar = () => {
     const [showUserAdd, setShowUserAdd] = useState(false);
+    const [showCargoAdd, setShowCargoAdd] = useState(false);
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+    const handleCargoClick = () => {
+        setShowCargoAdd(true);
+        setShowUserAdd(false); // Oculta el contenido de Usuarios si estaba visible
+    };
+
+    const handleUserClick = () => {
+        setShowUserAdd(true);
+        setShowCargoAdd(false); // Oculta el contenido de Cargo si estaba visible
+    };
     
     allSideMenu.forEach(item=> {
         const li = item.parentElement;
@@ -36,14 +48,14 @@ const Navbar = () => {
             </a>
             <ul className="side-menu top">
                 <li className="active">
-                    <a  href="#usuario" onClick={() => setShowUserAdd(true)}>
+                    <a  href="#cargo" onClick={handleCargoClick}>
                         <i className="bx bxs-user"></i>
                         <span className="text">Agregar Cargo</span>
                     </a>
                 </li>
             
                 <li>
-                    <a href="#cargo" onClick={() => setShowUserAdd(true)}>
+                    <a href="#dependencia" onClick={handleUserClick}>
                         <i className="bx bxs-user"></i>
                         <span className="text">Agregar Dependencia</span>
                     </a>
@@ -51,7 +63,7 @@ const Navbar = () => {
 
 
                 <li>
-                    <a href="#rol" onClick={() => setShowUserAdd(true)}>
+                    <a href="#usuario" onClick={handleUserClick}>
                         <i className="bx bxs-dashboard"></i>
                         <span className="text">Agregar Usuario</span>
                     </a>
@@ -60,7 +72,7 @@ const Navbar = () => {
 
 
                 <li>
-                    <a href="#producto">
+                    <a href="#articulos" onClick={handleUserClick}>
                         <i className='bx bxs-folder'></i>
                         <span className="text">Agregar Articulos</span>
                     </a>
@@ -124,11 +136,8 @@ const Navbar = () => {
 
             <main>
                 {showUserAdd && <UserAdd />}
-                {/* <div className="head-title">
-                    <div className="left">
-                        <h1>Dashboard</h1>
-                    </div>
-                </div> */}
+                {showCargoAdd && <CargoAdd />}
+                
             </main>
         </section>
         </div>
