@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import xelaImage from './logoMuni.png'; 
 import "./style.css"
 
-const Login = () =>{
+const Login = ({ setIsLoggedIn }) =>{
 
     const [nombre_usuario, setNombreUsuario] = useState('');
     const [contrasena, setContrasena] = useState('');
@@ -29,6 +29,7 @@ const Login = () =>{
 
             if (response.status === 200) {
                 toast.success(`¡Bienvenido, ${nombre_usuario}!`);
+                setIsLoggedIn(true);
                 navigate('/home');
             } else {
                 // console.log("Error al iniciar secion");

@@ -137,6 +137,10 @@ body{
 	z-index: -1;
 }
 
+.logout {
+	cursor: pointer;
+}
+
 #sidebar .side-menu li a{
     width: 100%;
     height: 100%;
