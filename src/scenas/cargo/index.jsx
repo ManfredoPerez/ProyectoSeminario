@@ -4,7 +4,7 @@ const CargoAdd = () =>{
 
     return(
         <div >
-            Hola
+            Cargo
         </div>
     )
 }

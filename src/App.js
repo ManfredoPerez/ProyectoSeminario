@@ -6,6 +6,7 @@ import Login from './scenas/login';
 import Navbar from "./scenas/navbar";
 import UserAdd from "./scenas/usuarios";
 import CargoAdd from "./scenas/cargo";
+import DependenciaAdd from "./scenas/dependencias";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Routes>
           <Routes>
             <Route path="/home/cargo" element={<CargoAdd />}/>
+          </Routes>
+          <Routes>
+            <Route path="/home/dependencia" element={<DependenciaAdd />}/>
           </Routes>
       </BrowserRouter>
     </div>

@@ -3,14 +3,23 @@ import xelaImage from "../login/logoMuni.png"
 import UserAdd from "../usuarios";
 import { useState } from "react";
 import CargoAdd from "../cargo";
+import DependenciaAdd from "../dependencias";
 
 const Navbar = () => {
     const [showUserAdd, setShowUserAdd] = useState(false);
     const [showCargoAdd, setShowCargoAdd] = useState(false);
+    const [showDependenciaAdd, setShowDependenciaAdd] = useState(false);
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
     const handleCargoClick = () => {
         setShowCargoAdd(true);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+    };
+
+    const handleDependenciaClick = () => {
+        setShowDependenciaAdd(true);
+        setShowCargoAdd(false);
         setShowUserAdd(false);
     };
 
@@ -55,7 +64,7 @@ const Navbar = () => {
                 </li>
             
                 <li>
-                    <a href="#dependencia" onClick={handleUserClick}>
+                    <a href="#dependencia" onClick={handleDependenciaClick}>
                         <i className="bx bxs-user"></i>
                         <span className="text">Agregar Dependencia</span>
                     </a>
@@ -137,7 +146,7 @@ const Navbar = () => {
             <main>
                 {showUserAdd && <UserAdd />}
                 {showCargoAdd && <CargoAdd />}
-                
+                {showDependenciaAdd && <DependenciaAdd />}
             </main>
         </section>
         </div>
