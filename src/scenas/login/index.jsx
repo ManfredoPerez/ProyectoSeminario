@@ -1,28 +1,78 @@
 
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import xelaImage from './logoMuni.png'; 
 import "./style.css"
 
 const Login = () =>{
+
+    const [nombre_usuario, setNombreUsuario] = useState('');
+    const [contrasena, setContrasena] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:4000/usuarios/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nombre_usuario: nombre_usuario,
+                    contrasena,
+                }),
+            });
+
+            if (response.status === 200) {
+                toast.success(`¡Bienvenido, ${nombre_usuario}!`);
+                navigate('/home');
+            } else {
+                // console.log("Error al iniciar secion");
+                // console.error('Error en el inicio de sesión');
+                toast.error('Credenciales inválidas');
+                setNombreUsuario('');
+                setContrasena('');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud: ', error);
+        }
+    };
     return(
         <div className="login template d-flex justify-content-center align-items-center vh-100 ">
             <div className="form_container p-5 rounded bg-white">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <div className="text-center">
                         <img src={xelaImage} alt="Logo" className="mb-4" style={{ width: '50%', height: 'auto' }} />
                     </div>
                     <h3 className="text-center">Login</h3>
                     <div className="mb-4">
                         <label htmlFor="user"> <h4>Usuario</h4> </label>
-                        <input type="text" placeholder="Ingrese su Usuario" className="form-control" />
+                        <input 
+                            type="text" 
+                            placeholder="Ingrese su Usuario" 
+                            className="form-control" 
+                            value={nombre_usuario}
+                            onChange={(e) => setNombreUsuario(e.target.value)}
+                        />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="contraseña"> <h4>Contraseña</h4> </label>
-                        <input type="contraseña" placeholder="Ingrese su contraseña" className="form-control" />
+                        <input 
+                            type="password" 
+                            placeholder="Ingrese su contraseña" 
+                            className="form-control" 
+                            value={contrasena}
+                            onChange={(e) => setContrasena(e.target.value)}
+                        />
                     </div>
                     
                     
                     <div className="d-grid mb-4">
-                        <button className="btn btn-primary">Iniciar sesion</button>
+                        <button type="submit" className="btn btn-primary">Iniciar sesion</button>
                     </div>
                     
                 </form>

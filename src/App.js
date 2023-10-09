@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Login from './scenas/login';
 import Navbar from "./scenas/navbar";
 import UserAdd from "./scenas/usuarios";
@@ -7,6 +10,7 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter>
+          <ToastContainer />
           <Routes>
             <Route path="/" element={<Login />} />
           </Routes>
