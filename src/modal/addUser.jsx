@@ -10,9 +10,9 @@ const AddUser = ({setOpenModal}) => {
     apellido: '',
     contrasena: '',
     codigo: '',
-    id_rol: '', // Debes inicializar este estado con el valor correcto
-    id_cargo: '', // Debes inicializar este estado con el valor correcto
-    id_dependencia: '', // Debes inicializar este estado con el valor correcto
+    id_rol: '', 
+    id_cargo: '', 
+    id_dependencia: '', 
   });
 
   const [cargos, setCargos] = useState([]);
@@ -79,8 +79,7 @@ const AddUser = ({setOpenModal}) => {
       });
 
       if (response.ok) {
-        // Aquí puedes realizar acciones después de agregar el usuario.
-        // Por ejemplo, limpiar los campos de entrada.
+
         setUserData({
           nombre_usuario: '',
           nombre: '',
@@ -92,14 +91,11 @@ const AddUser = ({setOpenModal}) => {
           id_dependencia: '',
         });
 
-        // Cierra el modal u realiza otras acciones necesarias.
         setOpenModal(false);
       } else {
-        // Maneja errores de la API aquí si es necesario.
         console.error('Error al agregar usuario');
       }
     } catch (error) {
-      // Maneja errores de red o del servidor aquí si es necesario.
       console.error('Error de conexión');
     }
   };
