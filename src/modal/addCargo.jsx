@@ -19,15 +19,9 @@ const AddCargo = ({setOpenModal}) => {
         </div>
         <form action="">
           <div className="form-group mb-2">
-            <label for="exampleInputPassword1">Cargo</label>
+            <label for="exampleInputPassword1">Nombre del Cargo</label>
             <input type="text" class="form-control" />
           </div>
-
-          <div className="form-group">
-            <label for="exampleInputPassword1">Nombre</label>
-            <input type="text" class="form-control" />
-          </div>
-
        
 
         </form>
