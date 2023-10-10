@@ -2,68 +2,58 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./style.css"
 
 import { useEffect, useState } from 'react';
+import AddUser from '../../modal/addUser';
 
 
 const columns = [
     { field: 'id_usuario', headerName: 'ID', width: 90 },
-    // {
-    //     field: "avatar", headerName: "Avatar", width:100,
-    //     renderCell: (params)=> {
-    //         return <img src={params.row.img || "/logoMuni.png"} alt='' />
-    //     },
-    // },
     {
       field: 'nombre_usuario',
-      headerName: 'First name',
+      headerName: 'Usuario',
       width: 150,
       editable: true,
     },
     {
       field: 'nombre',
-      headerName: 'Last name',
+      headerName: 'Nombre',
       width: 150,
       editable: true,
     },
     {
       field: 'apellido',
-      headerName: 'Age',
+      headerName: 'Apellido',
       width: 110,
       editable: true,
     },
-    {
-      field: 'contrasena',
-      headerName: 'Age',
-      width: 110,
-      editable: true,
-    },
+    
     {
       field: 'codigo',
-      headerName: 'Age',
+      headerName: 'Codigo',
       width: 110,
       editable: true,
     },
     {
-      field: 'id_rol',
-      headerName: 'Age',
+      field: 'tipo_rol',
+      headerName: 'Rol',
       width: 110,
       editable: true,
     },
     {
-      field: 'id_cargo',
-      headerName: 'Age',
+      field: 'nombre_cargo',
+      headerName: 'Cargo',
       width: 110,
       editable: true,
     },
     {
-      field: 'id_dependencia',
-      headerName: 'Age',
+      field: 'nombre_dependencia',
+      headerName: 'Dependencia',
       width: 110,
       editable: true,
     },
     
     {
         field: "actions",
-        headerName: "Actions",
+        headerName: "Acciones",
         width: 100,
         renderCell: (params) => {
             return <div className='action'>
@@ -71,7 +61,7 @@ const columns = [
                     <img src="/view.svg" alt="" />
                 </div>
                 <div className="delete">
-                <img src="/delete.svg" alt="" />
+                  <img src="/delete.svg" alt="" />
                 </div>
             </div>
         }
@@ -83,6 +73,10 @@ const columns = [
 const UsuarioTab = () => {
 
     const [data, setData] = useState([]);
+    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [isAddUserOpen, setAddUserOpen] = useState(false);
+    const [selectedUserData, setSelectedUserData] = useState(null);
 
     const fetchData = async () => {
         try {
@@ -102,16 +96,71 @@ const UsuarioTab = () => {
       };
       
 
-  useEffect(() => {
-    fetchData();
-  }, []); 
+      useEffect(() => {
+        fetchData();
+      }, []); 
+
+      const handleDeleteClick = (userId) => {
+        setSelectedUserId(userId);
+        setDialogOpen(true);
+      };
+
+      const handleViewClick = (id_usuario) => {
+        setSelectedUserData(id_usuario);
+        setAddUserOpen(true);
+      };
+    
+      const handleConfirmDelete = async () => {
+        try {
+          // Realiza la eliminación del usuario con el ID selectedUserId
+          const response = await fetch(`http://localhost:4000/usuarios/${selectedUserId}`, {
+            method: 'DELETE',
+          });
+    
+          if (response.ok) {
+            // Si la eliminación se realizó con éxito, cierra el cuadro de diálogo
+            setDialogOpen(false);
+            // Actualiza la tabla volviendo a cargar los datos
+            fetchData();
+          } else {
+            // Manejar errores si la eliminación no fue exitosa
+            console.error('Error al eliminar el usuario.');
+            // Puedes mostrar un mensaje de error al usuario si lo deseas
+          }
+        } catch (error) {
+          console.error('Error al eliminar el usuario:', error);
+        }
+      };
+    
+      const handleCancelDelete = () => {
+        // Cancela la eliminación y cierra el cuadro de diálogo
+        setDialogOpen(false);
+        window.history.back();
+      };
 
     return(
         <div className='dataTable'>
             <DataGrid
                 className='dataGrid'
                 rows={data}
-                columns={columns}
+                // columns={columns}
+                columns={columns.map((column) =>
+                  column.field === 'actions'
+                    ? {
+                        ...column,
+                        renderCell: (params) => (
+                          <div className='action'>
+                            <div className='view'>
+                              <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row)} />
+                            </div>
+                            <div className='delete' onClick={() => handleDeleteClick(params.row.id_usuario)}>
+                              <img src='/delete.svg' alt='' />
+                            </div>
+                          </div>
+                        ),
+                      }
+                    : column
+                )}
                 initialState={{
                 pagination: {
                     paginationModel: {
@@ -127,12 +176,35 @@ const UsuarioTab = () => {
                     }
                 }}
                 pageSizeOptions={[5]}
-                checkboxSelection
+                // checkboxSelection
                 disableRowSelectionOnClick
                 disableColumnFilter
                 disableDensitySelector
                 disableColumnSelector
             />
+
+             {/* Cuadro de diálogo de confirmación */}
+              {isDialogOpen && (
+                <div className='confirmation-dialog'>
+                      <div className='confirmation-dialog-1'>
+                        <p>¿Está seguro de que desea eliminar este usuario?</p>
+                        <div className="footer">
+                          <button onClick={handleConfirmDelete}>Aceptar</button>
+                          <button id="cancelBtn" onClick={handleCancelDelete}>Cancelar</button>
+                        </div>
+                      </div>
+                </div>
+              )}
+
+
+               {isAddUserOpen && (
+                  <AddUser
+                    setOpenModal={setAddUserOpen}
+                    userData={selectedUserData}
+                  />
+                )}
+
+                
         </div>
     )
 }

@@ -4,12 +4,16 @@ import UserAdd from "../usuarios";
 import { useState } from "react";
 import CargoAdd from "../cargo";
 import DependenciaAdd from "../dependencias";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
     const [showUserAdd, setShowUserAdd] = useState(false);
     const [showCargoAdd, setShowCargoAdd] = useState(false);
     const [showDependenciaAdd, setShowDependenciaAdd] = useState(false);
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    const navigate = useNavigate();
 
     const handleCargoClick = () => {
         setShowCargoAdd(true);
@@ -26,8 +30,16 @@ const Navbar = () => {
     const handleUserClick = () => {
         setShowUserAdd(true);
         setShowCargoAdd(false);
+        setShowDependenciaAdd(false);
     };
     
+    const handleLogout = () => {
+        // Limpiar la sesión y redirigir al usuario a la página de inicio de sesión
+        // setIsLoggedIn(false);
+        navigate('/');
+        toast.success('Sesión cerrada exitosamente');
+      };
+
     allSideMenu.forEach(item=> {
         const li = item.parentElement;
     
@@ -111,7 +123,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <a href="." className="logout">
+                    <a href className="logout" onClick={handleLogout}>
                         <i className="bx bxs-log-out-circle"></i>
                         <span className="text">Salir</span>
                     </a>
