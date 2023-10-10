@@ -58,6 +58,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 5px; 
   }
   
   .modalContainer .footer button {
@@ -76,3 +77,12 @@
     background-color: crimson;
   }
 
+/* margen top dependencia */
+  .modalContainer .footerdep {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px; 
+  }
+  
