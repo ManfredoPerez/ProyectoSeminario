@@ -45,7 +45,7 @@ const CargoTab = () => {
 
     const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:4000/cargo'); 
+          const response = await fetch('http://localhost:4000/cargos'); 
           if (!response.ok) {
             throw new Error('Error al obtener datos de la API');
           }
