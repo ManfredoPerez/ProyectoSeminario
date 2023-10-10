@@ -125,6 +125,7 @@ const AddUser = ({setOpenModal}) => {
               name="nombre_usuario"
               value={userData.nombre_usuario}
               onChange={handleInputChange}
+              placeholder="Ingrese su Usuario"
             />
           </div>
 
@@ -137,6 +138,7 @@ const AddUser = ({setOpenModal}) => {
               name="nombre"
               value={userData.nombre}
               onChange={handleInputChange}
+              placeholder="Ingrese su Nombre"
             />
           </div>
 
@@ -149,6 +151,8 @@ const AddUser = ({setOpenModal}) => {
               name="apellido"
               value={userData.apellido}
               onChange={handleInputChange}
+              placeholder="Ingrese su apellido"
+              required
             />
           </div>
 
@@ -161,6 +165,7 @@ const AddUser = ({setOpenModal}) => {
               name="contrasena"
               value={userData.contrasena}
               onChange={handleInputChange}
+              placeholder="Ingrese contraseña"
             />
           </div>
 
@@ -173,6 +178,7 @@ const AddUser = ({setOpenModal}) => {
               name="codigo"
               value={userData.codigo}
               onChange={handleInputChange}
+              placeholder="Ingrese su Codigo"
             />
           </div>
 
@@ -191,8 +197,9 @@ const AddUser = ({setOpenModal}) => {
                 onClick={handleSelectOpen}
                 onBlur={handleSelectClose}
                 onChange={handleInputChange}
+                placeholder="Elige un rol"
               >
-                <option value="">Elige un rol</option>
+                
                 {roles.map(rol => (
                   <option key={rol.id_rol} value={rol.id_rol}>
                     {rol.tipo_rol}
