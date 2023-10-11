@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./style.css";
 
 
@@ -68,6 +68,7 @@ const AddCargo = ({setOpenModal}) => {
               name="nombre_cargo"
               value={userData.nombre}
               onChange={handleInputChange}
+              placeholder="Ingrese Cargo"
             />
           </div>
 
