@@ -23,7 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />}  />
             <Route
-            path="/home/*"
+            path="/home"
             element={<PrivateRoute isLoggedIn={isLoggedIn} />}
           />
           </Routes>

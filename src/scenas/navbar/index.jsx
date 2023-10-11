@@ -7,11 +7,20 @@ import DependenciaAdd from "../dependencias";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Bienvenida from "../bienvenida/binevenida";
+import Articulos from "../articulos";
+import Reporte from "../reporte";
+import HojaServicio from "../hojaServicico";
 
 const Navbar = () => {
     const [showUserAdd, setShowUserAdd] = useState(false);
     const [showCargoAdd, setShowCargoAdd] = useState(false);
     const [showDependenciaAdd, setShowDependenciaAdd] = useState(false);
+    const [showBienvenida, setShowBienvenida] = useState(true);
+    const [showArticulos, setShowArticulos] = useState(true);
+    const [showReporte, setShowReporte ] = useState(true);
+    const [showHoja, setShowHoja] = useState(true);
+
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const navigate = useNavigate();
 
@@ -19,20 +28,73 @@ const Navbar = () => {
         setShowCargoAdd(true);
         setShowUserAdd(false);
         setShowDependenciaAdd(false);
+        setShowBienvenida(false);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
     };
 
     const handleDependenciaClick = () => {
         setShowDependenciaAdd(true);
         setShowCargoAdd(false);
         setShowUserAdd(false);
+        setShowHoja(false);
+        setShowBienvenida(false); 
+        setShowReporte(false);
+        setShowArticulos(false);
     };
 
     const handleUserClick = () => {
         setShowUserAdd(true);
         setShowCargoAdd(false);
         setShowDependenciaAdd(false);
+        setShowBienvenida(false);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
     };
+
+    const handerBienvenidaClick = () => {
+        setShowBienvenida(true);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
+    }
     
+    const handerArticulosClick = () => {
+        setShowArticulos(true);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowReporte(false);
+        setShowHoja(false);
+    }
+
+    const handerReporteClick = () => {
+        setShowReporte(true);
+        setShowArticulos(false);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowHoja(false);
+    }
+
+    const handerHojaClick = () => {
+        setShowHoja(true);
+        setShowReporte(false);
+        setShowArticulos(false);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+    }
+
+
     const handleLogout = () => {
         // Limpiar la sesión y redirigir al usuario a la página de inicio de sesión
         // setIsLoggedIn(false);
@@ -63,7 +125,7 @@ const Navbar = () => {
         <div>
         
         <section id="sidebar">
-            <a href="/home" className="brand">
+            <a href className="brand" style={{cursor: "pointer"}} onClick={handerBienvenidaClick}>
                 <i className="bx bxs-smile"></i>
                 <span className="text">Municipalidad</span>
             </a>
@@ -93,21 +155,21 @@ const Navbar = () => {
 
 
                 <li>
-                    <a href="#articulos" onClick={handleUserClick}>
+                    <a href="#articulos" onClick={handerArticulosClick}>
                         <i className='bx bxs-folder'></i>
                         <span className="text">Agregar Articulos</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#servicio">
+                    <a href="#servicio" onClick={handerHojaClick}>
                         <i className='bx bxs-spreadsheet'></i>
                         <span className="text">Crear Hoja de Servicio</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#reporte">
+                    <a href="#reporte" onClick={handerReporteClick}>
                         <i className='bx bxs-report'></i>
                         <span className="text">Reporte</span>
                     </a>
@@ -139,12 +201,8 @@ const Navbar = () => {
                 <a href="/home" className="profile">
                     <img src={xelaImage} alt="" />
                 </a>
-                <a href="/home" className="nav-link"> <h4> <b>Tarjeta de Responsabilidad</b> </h4> </a>
+                <a href style={{cursor: "pointer"}} onClick={handerBienvenidaClick} className="nav-link"> <h4> <b>Tarjeta de Responsabilidad</b> </h4> </a>
                 <form action="#">
-                    {/* <div className="form-input">
-                        <input type="search" placeholder="Buscar..."/>
-                        <button type="submit" className="search-btn"><i className='bx bx-search-alt' ></i></button>
-                    </div> */}
                 </form>
 
                 <input type="checkbox" id="switch-mode" hidden/>
@@ -156,9 +214,13 @@ const Navbar = () => {
             </nav>
 
             <main>
+                {showBienvenida && <Bienvenida />}
                 {showUserAdd && <UserAdd />}
                 {showCargoAdd && <CargoAdd />}
                 {showDependenciaAdd && <DependenciaAdd />}
+                {showArticulos && <Articulos/> }
+                {showReporte && <Reporte />}
+                {showHoja && <HojaServicio/> }
             </main>
         </section>
         </div>
