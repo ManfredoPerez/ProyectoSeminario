@@ -9,6 +9,8 @@ const AddCargo = ({setOpenModal}) => {
    
   });
 
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
