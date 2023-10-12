@@ -17,9 +17,9 @@ const Navbar = () => {
     const [showCargoAdd, setShowCargoAdd] = useState(false);
     const [showDependenciaAdd, setShowDependenciaAdd] = useState(false);
     const [showBienvenida, setShowBienvenida] = useState(true);
-    const [showArticulos, setShowArticulos] = useState(true);
-    const [showReporte, setShowReporte ] = useState(true);
-    const [showHoja, setShowHoja] = useState(true);
+    const [showArticulosAdd, setShowArticulos] = useState(false);
+    const [showReporteAdd, setShowReporte ] = useState(false);
+    const [showHojaAdd, setShowHoja] = useState(false);
 
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const navigate = useNavigate();
@@ -53,6 +53,16 @@ const Navbar = () => {
         setShowReporte(false);
         setShowArticulos(false);
     };
+    
+    const handerArticulosClick = () => {
+        setShowArticulos(true);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowReporte(false);
+        setShowHoja(false);
+    }
 
     const handerBienvenidaClick = () => {
         setShowBienvenida(true);
@@ -64,15 +74,6 @@ const Navbar = () => {
         setShowArticulos(false);
     }
     
-    const handerArticulosClick = () => {
-        setShowArticulos(true);
-        setShowBienvenida(false);
-        setShowCargoAdd(false);
-        setShowUserAdd(false);
-        setShowDependenciaAdd(false);
-        setShowReporte(false);
-        setShowHoja(false);
-    }
 
     const handerReporteClick = () => {
         setShowReporte(true);
@@ -96,8 +97,6 @@ const Navbar = () => {
 
 
     const handleLogout = () => {
-        // Limpiar la sesión y redirigir al usuario a la página de inicio de sesión
-        // setIsLoggedIn(false);
         navigate('/');
         toast.success('Sesión cerrada exitosamente');
       };
@@ -169,7 +168,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <a href="#reporte" onClick={handerReporteClick}>
+                    <a href onClick={handerReporteClick}>
                         <i className='bx bxs-report'></i>
                         <span className="text">Reporte</span>
                     </a>
@@ -218,9 +217,9 @@ const Navbar = () => {
                 {showUserAdd && <UserAdd />}
                 {showCargoAdd && <CargoAdd />}
                 {showDependenciaAdd && <DependenciaAdd />}
-                {showArticulos && <Articulos/> }
-                {showReporte && <Reporte />}
-                {showHoja && <HojaServicio/> }
+                {showArticulosAdd && <Articulos/> }
+                {showReporteAdd && <Reporte />}
+                {showHojaAdd && <HojaServicio/> }
             </main>
         </section>
         </div>

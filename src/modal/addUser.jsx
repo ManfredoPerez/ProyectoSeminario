@@ -116,46 +116,50 @@ const AddUser = ({setOpenModal}) => {
           <h3>Agregar nuevo Usuario</h3>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="form-group mb-2">
-            <label for="exampleInputPassword1">Usuario</label>
-            <input 
-              type="text" ç
-              class="form-control"
-              id="nombre_usuario"
-              name="nombre_usuario"
-              value={userData.nombre_usuario}
-              onChange={handleInputChange}
-              placeholder="Ingrese su Usuario"
-            />
-          </div>
-
+          
           <div className="form-group">
-            <label for="exampleInputPassword1">Nombre</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="nombre"
-              name="nombre"
-              value={userData.nombre}
-              onChange={handleInputChange}
-              placeholder="Ingrese su Nombre"
-            />
+              <label for="exampleInputPassword1">Nombre</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="nombre"
+                name="nombre"
+                value={userData.nombre}
+                onChange={handleInputChange}
+                placeholder="Eje 'Juan'"
+              />
           </div>
 
-          <div className="form-group">
-            <label for="exampleInputPassword1">Apellido</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="apellido"
-              name="apellido"
-              value={userData.apellido}
-              onChange={handleInputChange}
-              placeholder="Ingrese su apellido"
-              required
-            />
-          </div>
+          <div class="form-row"> 
+            <div className="form-group col-md-6">
+              <label for="exampleInputPassword1">Usuario</label>
+              <input 
+                type="text" ç
+                class="form-control"
+                id="nombre_usuario"
+                name="nombre_usuario"
+                value={userData.nombre_usuario}
+                onChange={handleInputChange}
+                placeholder="Eje 'JN1'"
+              />
+            </div>
 
+            <div className="form-group col-md-6">
+              <label for="exampleInputPassword1">Apellido</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="apellido"
+                name="apellido"
+                value={userData.apellido}
+                onChange={handleInputChange}
+                placeholder="Eje 'Ramos'"
+                required
+              />
+            </div>
+
+          </div>
+          
           <div className="form-group">
             <label for="exampleInputPassword1">Contraseña</label>
             <input 
@@ -165,85 +169,95 @@ const AddUser = ({setOpenModal}) => {
               name="contrasena"
               value={userData.contrasena}
               onChange={handleInputChange}
-              placeholder="Ingrese contraseña"
+              placeholder=""
             />
           </div>
 
-          <div className="form-group">
-            <label for="exampleInputPassword1">Codigo</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="codigo"
-              name="codigo"
-              value={userData.codigo}
-              onChange={handleInputChange}
-              placeholder="Ingrese su Codigo"
-            />
-          </div>
+          <div className="form-row">
 
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Rol</label>
-            <div
-              className={`select-wrapper ${
-                isRolSelectOpen ? 'select-open' : ''
-              }`}
-            >
-              <select
-                className="form-control"
-                id="id_rol"
-                name="id_rol"
-                value={userData.id_rol}
-                onClick={handleSelectOpen}
-                onBlur={handleSelectClose}
+            <div className="form-group col-md-6">
+              <label for="exampleInputPassword1">Codigo</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="codigo"
+                name="codigo"
+                value={userData.codigo}
                 onChange={handleInputChange}
-                placeholder="Elige un rol"
+                placeholder="Eje '001'"
+              />
+            </div>
+
+            <div className="form-group col-md-6">
+              <label for="exampleFormControlSelect1">Rol</label>
+              <div
+                className={`select-wrapper ${
+                  isRolSelectOpen ? 'select-open' : ''
+                }`}
               >
-                
-                {roles.map(rol => (
-                  <option key={rol.id_rol} value={rol.id_rol}>
-                    {rol.tipo_rol}
+                <select
+                  className="form-control"
+                  id="id_rol"
+                  name="id_rol"
+                  value={userData.id_rol}
+                  onClick={handleSelectOpen}
+                  onBlur={handleSelectClose}
+                  onChange={handleInputChange}
+                  placeholder="Eje 'User'"
+                >
+                  <option value="">Elige un rol</option>
+                  {roles.map(rol => (
+                    <option key={rol.id_rol} value={rol.id_rol}>
+                      {rol.tipo_rol}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div className="form-row">
+            <div class="form-group col-md-6">
+              <label for="exampleFormControlSelect1">Cargo</label>
+              <select 
+                class="form-control" 
+                id="id_cargo"
+                name="id_cargo"
+                value={userData.id_cargo}
+                onChange={handleInputChange}
+              >
+                <option value="">Elige un Cargo</option>
+                {cargos.map(cargo => (
+                  <option key={cargo.id_cargo} value={cargo.id_cargo}>
+                    {cargo.nombre_cargo} 
                   </option>
                 ))}
               </select>
             </div>
+
+            <div class="form-group col-md-6">
+              <label for="exampleFormControlSelect1">Dependencia</label>
+              <select 
+                class="form-control" 
+                id="id_dependencia"
+                name="id_dependencia"
+                value={userData.id_dependencia}
+                onChange={handleInputChange}
+              >
+                <option value="">Elige una dependencia</option>
+                {dependencias.map(dependencia => (
+                  <option key={dependencia.id_dependencia} value={dependencia.id_dependencia}>
+                    {dependencia.nombre_dependencia} 
+                  </option>
+                ))}
+              </select>
+            </div>
+
           </div>
 
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Cargo</label>
-            <select 
-              class="form-control" 
-              id="id_cargo"
-              name="id_cargo"
-              value={userData.id_cargo}
-              onChange={handleInputChange}
-            >
-              <option value="">Elige un Cargo</option>
-              {cargos.map(cargo => (
-                <option key={cargo.id_cargo} value={cargo.id_cargo}>
-                  {cargo.nombre_cargo} 
-                </option>
-              ))}
-            </select>
-          </div>
 
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Dependencia</label>
-            <select 
-              class="form-control" 
-              id="id_dependencia"
-              name="id_dependencia"
-              value={userData.id_dependencia}
-              onChange={handleInputChange}
-            >
-              <option value="">Elige una dependencia</option>
-              {dependencias.map(dependencia => (
-                <option key={dependencia.id_dependencia} value={dependencia.id_dependencia}>
-                  {dependencia.nombre_dependencia} 
-                </option>
-              ))}
-            </select>
-          </div>
 
         <div className="footer">
           <button

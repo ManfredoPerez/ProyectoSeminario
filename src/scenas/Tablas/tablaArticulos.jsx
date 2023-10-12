@@ -6,47 +6,47 @@ import AddUser from '../../modal/addUser';
 
 
 const columns = [
-    { field: 'id_usuario', headerName: 'ID', width: 90 },
-    {
-      field: 'nombre_usuario',
-      headerName: 'Usuario',
-      width: 150,
-      editable: true,
-    },
+    { field: 'id_articulo', headerName: 'ID', width: 90 },
     {
       field: 'nombre',
-      headerName: 'Nombre',
+      headerName: 'Nom Usuario',
       width: 150,
       editable: true,
     },
     {
-      field: 'apellido',
-      headerName: 'Apellido',
+      field: 'codigo',
+      headerName: 'Codigo',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'nombre_articulo',
+      headerName: 'Articulo',
       width: 110,
       editable: true,
     },
     
     {
-      field: 'codigo',
-      headerName: 'Codigo',
+      field: 'no_serie',
+      headerName: 'No. Serie',
       width: 110,
       editable: true,
     },
     {
-      field: 'tipo_rol',
-      headerName: 'Rol',
+      field: 'valor_unitario',
+      headerName: 'Valor',
       width: 110,
       editable: true,
     },
     {
-      field: 'nombre_cargo',
-      headerName: 'Cargo',
+      field: 'valor_total',
+      headerName: 'Total',
       width: 110,
       editable: true,
     },
     {
-      field: 'nombre_dependencia',
-      headerName: 'Dependencia',
+      field: 'valor_baja',
+      headerName: 'Valor Baja',
       width: 110,
       editable: true,
     },
@@ -70,33 +70,17 @@ const columns = [
   
   
 
-const UsuarioTab = () => {
+const ArticuloTab = () => {
 
     const [data, setData] = useState([]);
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isAddUserOpen, setAddUserOpen] = useState(false);
     const [selectedUserData, setSelectedUserData] = useState(null);
-    const [intervalCount, setIntervalCount] = useState(0);
-
-    const updateData = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/usuarios');
-        if (!response.ok) {
-          throw new Error('Error al obtener datos de la API');
-        }
-        const data = await response.json();
-  
-        const dataWithIds = data.map((item, index) => ({ ...item, id: index }));
-        setData(dataWithIds);
-      } catch (error) {
-        console.error('Error al obtener datos de la API:', error);
-      }
-    };
 
     const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:4000/usuarios'); 
+          const response = await fetch('http://localhost:4000/articulos'); 
           if (!response.ok) {
             throw new Error('Error al obtener datos de la API');
           }
@@ -110,18 +94,6 @@ const UsuarioTab = () => {
           console.error('Error al obtener datos de la API:', error);
         }
       };
-
-      useEffect(() => {
-        fetchData();
-        const intervalId = setInterval(() => {
-            updateData();
-            // Incrementa el contador del intervalo
-            setIntervalCount(intervalCount + 1);
-          }, 5000); // Actualiza cada 5 segundos (ajusta el valor según tus necesidades)
-      
-          // Limpia el intervalo al desmontar el componente
-          return () => clearInterval(intervalId);
-      }, [intervalCount]);
       
 
       useEffect(() => {
@@ -237,4 +209,4 @@ const UsuarioTab = () => {
     )
 }
 
-export default UsuarioTab;
+export default ArticuloTab;

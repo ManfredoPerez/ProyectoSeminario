@@ -3,8 +3,7 @@ const HojaServicio = () => {
     
     return (
         <div className="container text-center mt-5">
-          <h1>Bienvenido</h1>
-          
+          <h1>Hoja de servicio</h1>
         </div>
       );
 }

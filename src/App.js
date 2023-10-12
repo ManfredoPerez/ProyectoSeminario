@@ -8,6 +8,11 @@ import Navbar from "./scenas/navbar";
 import UserAdd from "./scenas/usuarios";
 import CargoAdd from "./scenas/cargo";
 import DependenciaAdd from "./scenas/dependencias";
+import Reporte from "./scenas/reporte";
+import Articulos from "./scenas/articulos";
+import HojaServicio from "./scenas/hojaServicico";
+import AddArticulo from "./modal/addArticulo";
+import AddUser from "./modal/addUser";
 
 function PrivateRoute({ element, isLoggedIn }) {
   return isLoggedIn ? element : <Navigate to="/" />;
@@ -39,6 +44,22 @@ function App() {
           <Routes>
             <Route path="/home/dependencia" element={<DependenciaAdd />}/>
           </Routes>
+          <Routes>
+            <Route path="/home/articulos" element={<Articulos />}/>
+          </Routes>
+          <Routes>
+            <Route path="/home/reporte" element={<Reporte />}/>
+          </Routes>
+          <Routes>
+            <Route path="/home/hojaServicio" element={<HojaServicio />}/>
+          </Routes>
+          <Routes>
+            <Route path="/home/Addarticulo" element={<AddArticulo />}/>
+          </Routes>
+          <Routes>
+            <Route path="/home/AddUser" element={<AddUser />}/>
+          </Routes>
+          
       </BrowserRouter>
     </div>
   );
