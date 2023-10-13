@@ -21,7 +21,7 @@ const Articulos = () => {
                       onClick={() => {
                           setModalOpen(true);
                       }}
-                  >Agregar Usuario</button>
+                  >Agregar Articulos</button>
               </div>
                   <ArticuloTab slug="users"/>
                   {modalOpen && <AddArticulo setOpenModal={setModalOpen} />}

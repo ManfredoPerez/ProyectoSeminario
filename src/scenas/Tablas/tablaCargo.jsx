@@ -152,7 +152,7 @@ const CargoTab = () => {
             pageSizeOptions={[5]}
             // checkboxSelection
             disableRowSelectionOnClick
-            // disableColumnFilter
+            disableColumnFilter
             disableDensitySelector
             disableColumnSelector
         />

@@ -11,8 +11,11 @@ import Bienvenida from "../bienvenida/binevenida";
 import Articulos from "../articulos";
 import Reporte from "../reporte";
 import HojaServicio from "../hojaServicico";
+import { useUserRole } from "../login/UserRoleContext";
 
 const Navbar = () => {
+    const { userRole } = useUserRole();
+
     const [showUserAdd, setShowUserAdd] = useState(false);
     const [showCargoAdd, setShowCargoAdd] = useState(false);
     const [showDependenciaAdd, setShowDependenciaAdd] = useState(false);
@@ -129,50 +132,71 @@ const Navbar = () => {
                 <span className="text">Municipalidad</span>
             </a>
             <ul className="side-menu top">
-                <li className="active">
-                    <a  href="#cargo" onClick={handleCargoClick}>
-                        <i className="bx bxs-user"></i>
-                        <span className="text">Agregar Cargo</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <a href="#dependencia" onClick={handleDependenciaClick}>
-                        <i className="bx bxs-user"></i>
-                        <span className="text">Agregar Dependencia</span>
-                    </a>
-                </li>
+            {userRole === 'administrador' && (
+                <>
+                    <li className="active">
+                        <a  href="#cargo" onClick={handleCargoClick}>
+                            <i className="bx bxs-user"></i>
+                            <span className="text">Agregar Cargo</span>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="#dependencia" onClick={handleDependenciaClick}>
+                            <i className="bx bxs-user"></i>
+                            <span className="text">Agregar Dependencia</span>
+                        </a>
+                    </li>
 
 
-                <li>
-                    <a href="#usuario" onClick={handleUserClick}>
-                        <i className="bx bxs-dashboard"></i>
-                        <span className="text">Agregar Usuario</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="#usuario" onClick={handleUserClick}>
+                            <i className="bx bxs-dashboard"></i>
+                            <span className="text">Agregar Usuario</span>
+                        </a>
+                    </li>
 
 
 
-                <li>
-                    <a href="#articulos" onClick={handerArticulosClick}>
-                        <i className='bx bxs-folder'></i>
-                        <span className="text">Agregar Articulos</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="#articulos" onClick={handerArticulosClick}>
+                            <i className='bx bxs-folder'></i>
+                            <span className="text">Agregar Articulos</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="#servicio" onClick={handerHojaClick}>
-                        <i className='bx bxs-spreadsheet'></i>
-                        <span className="text">Crear Hoja de Servicio</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="#servicio" onClick={handerHojaClick}>
+                            <i className='bx bxs-spreadsheet'></i>
+                            <span className="text">Crear Hoja de Servicio</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href onClick={handerReporteClick}>
-                        <i className='bx bxs-report'></i>
-                        <span className="text">Reporte</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href onClick={handerReporteClick}>
+                            <i className='bx bxs-report'></i>
+                            <span className="text">Reporte</span>
+                        </a>
+                    </li>
+                </>
+                )}
+                {userRole === 'usuario' && (
+                    <>
+                        <li>
+                            <a href="#servicio" onClick={handerHojaClick}>
+                                <i className='bx bxs-spreadsheet'></i>
+                                <span className="text">Ver Tus Articulos</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href onClick={handerReporteClick}>
+                                <i className='bx bxs-report'></i>
+                                <span className="text">Tus Reportes</span>
+                            </a>
+                        </li>
+                    </>
+                )}
             </ul>
 
             <ul className="side-menu">

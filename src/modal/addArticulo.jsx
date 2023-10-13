@@ -1,6 +1,7 @@
 import QRCode from "react-qr-code";
 import "./style.css";
 import { useEffect, useState } from "react";
+// import htmlToImage from 'html-to-image';
 // import html2canvas from "html2canvas";
 
 
@@ -24,6 +25,7 @@ const AddArticulo = ({setOpenModal}) => {
 
     const handleClose = () => {
         setShowQR(false);
+        setOpenModal(false);
       };
     
     //   const handleShowQR = () => {
@@ -32,11 +34,13 @@ const AddArticulo = ({setOpenModal}) => {
     //   };
 
       const handlePrint = () => {
+        // qrValueRef.current = articuloData.qr;
         window.print();
         
       };
 
       const handleShowQR = () => {
+        generateQRCode();
         setShowQR(true);
       };
 
@@ -60,9 +64,9 @@ const AddArticulo = ({setOpenModal}) => {
     const generateQRCode = () => {
         const qrData = JSON.stringify(articuloData);
 
-        const qrImageUrl = `data:image/png;base64,${btoa(qrData)}`;
+        // const qrImageUrl = `data:image/png;base64,${btoa(qrData)}`;
 
-        setArticuloData({ ...articuloData, qr: qrImageUrl });
+        setArticuloData({ ...articuloData, qr: qrData });
       };
 
     const handleSubmit = async (e) => {
@@ -71,6 +75,7 @@ const AddArticulo = ({setOpenModal}) => {
         try{
 
             generateQRCode();
+            console.log("Datos que se enviarán:", articuloData); 
 
             const response = await fetch('http://localhost:4000/articulos/', {
                 method: 'POST',
@@ -93,7 +98,8 @@ const AddArticulo = ({setOpenModal}) => {
                     cantidad: '',
                 });
 
-                setOpenModal(false);
+                // setOpenModal(false);
+                handleShowQR();
             }
         }catch (error) {
             console.error('Error de conexion');
@@ -121,7 +127,7 @@ const AddArticulo = ({setOpenModal}) => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-row">
                         <div className="form-group col-md-6">
-                            <label for="exampleFormControlSelect1">Nombre</label>
+                            <label for="exampleFormControlSelect1">Responsable </label>
                             <select 
                                 className="form-control" 
                                 id="id_usuario"
@@ -129,9 +135,9 @@ const AddArticulo = ({setOpenModal}) => {
                                 value={articuloData.id_usuario}
                                 onChange={handleInputChange}
                             >
-                                <option value="">Elige un Cargo</option>
+                                <option value="">Elige un responsable</option>
                                     {usuarios.map(usuario => (
-                                    <option key={usuario.id_usuario} value={usuario.id_cargo}>
+                                    <option key={usuario.id_usuario} value={usuario.id_usuario}>
                                         {usuario.nombre} 
                                     </option>
                                 ))}

@@ -5,16 +5,21 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import xelaImage from './logoMuni.png'; 
 import "./style.css"
+import { useUserRole } from './UserRoleContext';
 
 const Login = ({ setIsLoggedIn }) =>{
 
     const [nombre_usuario, setNombreUsuario] = useState('');
     const [contrasena, setContrasena] = useState('');
     const navigate = useNavigate();
+    // const { user, setUser } = useState(null); 
+    const { setUserRole } = useUserRole();
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
+    
         try {
             const response = await fetch('http://localhost:4000/usuarios/login', {
                 method: 'POST',
@@ -26,14 +31,19 @@ const Login = ({ setIsLoggedIn }) =>{
                     contrasena,
                 }),
             });
-
+    
             if (response.status === 200) {
-                toast.success(`¡Bienvenido, ${nombre_usuario}!`);
+                const data = await response.json();
+                if (data.rol === 1) {
+                    setUserRole('usuario');
+                    toast.success(`¡Bienvenido, ${data.nombre} ${data.apellido}! Eres un usuario`);
+                } else if (data.rol === 2) {
+                    setUserRole('administrador');
+                    toast.success(`¡Bienvenido, ${data.nombre} ${data.apellido}! Eres un administrador`);
+                }
                 setIsLoggedIn(true);
                 navigate('/home');
             } else {
-                // console.log("Error al iniciar secion");
-                // console.error('Error en el inicio de sesión');
                 toast.error('Credenciales inválidas');
                 setNombreUsuario('');
                 setContrasena('');
@@ -42,6 +52,7 @@ const Login = ({ setIsLoggedIn }) =>{
             console.error('Error en la solicitud: ', error);
         }
     };
+    
     return(
         <div className="login template d-flex justify-content-center align-items-center vh-100 ">
             <div className="form_container p-5 rounded bg-white">
