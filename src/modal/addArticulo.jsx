@@ -138,7 +138,7 @@ const AddArticulo = ({setOpenModal}) => {
                                 <option value="">Elige un responsable</option>
                                     {usuarios.map(usuario => (
                                     <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                                        {usuario.nombre} 
+                                        {usuario.id_usuario} {usuario.nombre} 
                                     </option>
                                 ))}
                             </select>

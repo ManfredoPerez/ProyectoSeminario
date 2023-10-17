@@ -25,6 +25,7 @@ img{
 .action {
     display: flex;
     gap: 15px;
+    justify-content: center;
 }
 
 .action img{
@@ -72,6 +73,10 @@ img{
 
   #cancelBtn {
     background-color: crimson;
+  }
+
+  #generateExcelBtn {
+    background-color: green;
   }
 
   

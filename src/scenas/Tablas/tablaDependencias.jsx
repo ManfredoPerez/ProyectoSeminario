@@ -44,7 +44,9 @@ const DependenciaTab = () => {
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isAddUserOpen, setAddUserOpen] = useState(false);
+    // const [ setAddUserOpen] = useState(false);
     const [selectedUserData, setSelectedUserData] = useState(null);
+    // const [setSelectedUserData] = useState(null);
     const [intervalCount, setIntervalCount] = useState(0);
 
     const updateData = async () => {
@@ -123,9 +125,14 @@ const DependenciaTab = () => {
     }
   };
 
+  const handleCancelModificar = () => {
+    setAddUserOpen(false);
+    // window.history.back();
+  };
+
   const handleCancelDelete = () => {
     setDialogOpen(false);
-    window.history.back();
+    // window.history.back();
   };
 
     return(
@@ -140,7 +147,7 @@ const DependenciaTab = () => {
                         renderCell: (params) => (
                           <div className='action'>
                             <div className='view'>
-                              <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row)} />
+                              <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row.id_dependencia)} />
                             </div>
                             <div className='delete' onClick={() => handleDeleteClick(params.row.id_dependencia)}>
                               <img src='/delete.svg' alt='' />
@@ -173,14 +180,27 @@ const DependenciaTab = () => {
                 disableColumnSelector
             />
             {isDialogOpen && (
-            <div className='confirmation-dialog'>
-                  <div className='confirmation-dialog-1'>
-                    <p>¿Está seguro de que desea eliminar esta Dependencia?</p>
-                    <div className="footer">
-                      <button id="cancelBtn" onClick={handleCancelDelete}>Cancelar</button>
-                      <button onClick={handleConfirmDelete}>Aceptar</button>
+              <div className='confirmation-dialog'>
+                    <div className='confirmation-dialog-1'>
+                      <p>¿Está seguro de que desea eliminar esta Dependencia?</p>
+                      <div className="footer">
+                        <button id="cancelBtn" onClick={handleCancelDelete}>Cancelar</button>
+                        <button onClick={handleConfirmDelete}>Aceptar</button>
+                      </div>
                     </div>
-                  </div>
+              </div>
+            )}
+
+
+          {isAddUserOpen && (
+            <div className='confirmation-dialog'>
+              <div className='confirmation-dialog-1'>
+                <p>¿Está seguro de que desea eliminar esta Dependencia?</p>
+                  <h1>Usuario: {setData.nombre_dependencia} </h1>
+                <div className="footer">
+                  <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
+                </div>
+              </div>
             </div>
           )}
 

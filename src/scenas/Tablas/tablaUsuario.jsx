@@ -39,14 +39,15 @@ const columns = [
       editable: true,
     },
     {
-      field: 'nombre_cargo',
-      headerName: 'Cargo',
-      width: 110,
-      editable: true,
-    },
-    {
       field: 'nombre_dependencia',
       headerName: 'Dependencia',
+      width: 110,
+      editable: true,
+      
+    },
+    {
+      field: 'nombre_cargo',
+      headerName: 'Cargo',
       width: 110,
       editable: true,
     },

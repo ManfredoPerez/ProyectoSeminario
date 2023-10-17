@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 
 
 const AddCargo = ({setOpenModal, updateCargoData }) => {
 
+  const [dependenia, setDependencia] = useState([]);
+
   const [userData, setUserData] = useState({
     nombre_cargo: '',
-   
+    id_dependencia: '',
   });
 
+  useEffect(() => {
+    fetch('http://localhost:4000/dependencia')
+    .then(response => response.json())
+      .then(data => {
+        setDependencia(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los cargos', error);
+      });
+  })
   
 
   const handleInputChange = (e) => {
@@ -31,6 +43,7 @@ const AddCargo = ({setOpenModal, updateCargoData }) => {
 
         setUserData({
           nombre_cargo: '',
+          id_dependencia: '',
         });
         
         
@@ -48,7 +61,7 @@ const AddCargo = ({setOpenModal, updateCargoData }) => {
 
     return (
         <div className="modalBackground">
-          <div className="modalContainer" style={{width: "500px", height: "350px"}}>
+          <div className="modalContainer" style={{width: "500px", height: "420px"}}>
             <div className="titleCloseBtn">
               <button
                 onClick={() => {
@@ -63,6 +76,25 @@ const AddCargo = ({setOpenModal, updateCargoData }) => {
           <br />
         </div>
         <form onSubmit={handleSubmit}>
+
+          {/* DEPENDENCIA  */}
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Dependencia</label>
+            <select 
+              class="form-control" 
+              id="id_dependencia"
+              name="id_dependencia"
+              value={userData.id_dependencia}
+              onChange={handleInputChange}
+            >
+             <option value="">Elige una dependencia</option>
+              {dependenia.map(depe => (
+                  <option key={depe.id_dependencia} value={depe.id_dependencia}>
+                    {depe.nombre_dependencia} 
+                  </option>
+                ))}
+            </select>
+          </div>
           <div className="form-group mb-2">
             <label for="exampleInputPassword1">Nombre del Cargo</label>
             <input 

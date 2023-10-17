@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import xelaImage from './logoMuni.png'; 
 import "./style.css"
 import { useUserRole } from './UserRoleContext';
+import { useUserId } from './UserIdContext';
+
 
 const Login = ({ setIsLoggedIn }) =>{
 
@@ -14,6 +16,9 @@ const Login = ({ setIsLoggedIn }) =>{
     const navigate = useNavigate();
     // const { user, setUser } = useState(null); 
     const { setUserRole } = useUserRole();
+
+    const { setUserId } = useUserId(); 
+
     
 
     const handleSubmit = async (e) => {
@@ -31,9 +36,12 @@ const Login = ({ setIsLoggedIn }) =>{
                     contrasena,
                 }),
             });
-    
+            const data = await response.json();
+            const userId = data.id_usuario;
+            setUserId(userId);
+            // console.log(setUserId)
+            // console.log(setUserId)
             if (response.status === 200) {
-                const data = await response.json();
                 if (data.rol === 1) {
                     setUserRole('usuario');
                     toast.success(`¡Bienvenido, ${data.nombre} ${data.apellido}! Eres un usuario`);

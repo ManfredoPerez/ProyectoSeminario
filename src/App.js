@@ -14,6 +14,7 @@ import HojaServicio from "./scenas/hojaServicico";
 import AddArticulo from "./modal/addArticulo";
 import AddUser from "./modal/addUser";
 import { UserRoleProvider } from "./scenas/login/UserRoleContext";
+import { UserIdProvider } from "./scenas/login/UserIdContext";
 
 function PrivateRoute({ element, isLoggedIn }) {
   return isLoggedIn ? element : <Navigate to="/" />;
@@ -26,6 +27,7 @@ function App() {
     <div className="app">
       <BrowserRouter>
       <UserRoleProvider>
+        <UserIdProvider>
           <ToastContainer />
           <Routes>
             <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />}  />
@@ -61,6 +63,7 @@ function App() {
           <Routes>
             <Route path="/home/AddUser" element={<AddUser />}/>
           </Routes>
+          </UserIdProvider>
           </UserRoleProvider>
       </BrowserRouter>
     </div>

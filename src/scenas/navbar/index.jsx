@@ -12,6 +12,8 @@ import Articulos from "../articulos";
 import Reporte from "../reporte";
 import HojaServicio from "../hojaServicico";
 import { useUserRole } from "../login/UserRoleContext";
+import ArticuloUsuario from "../articulosUsuario";
+import QR from "../QR";
 
 const Navbar = () => {
     const { userRole } = useUserRole();
@@ -23,6 +25,8 @@ const Navbar = () => {
     const [showArticulosAdd, setShowArticulos] = useState(false);
     const [showReporteAdd, setShowReporte ] = useState(false);
     const [showHojaAdd, setShowHoja] = useState(false);
+    const [showArtuloUsuario, setShowArtuculoUser] = useState(false);
+    const [showQR, setShowQr] = useState(false);
 
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const navigate = useNavigate();
@@ -35,6 +39,8 @@ const Navbar = () => {
         setShowHoja(false);
         setShowReporte(false);
         setShowArticulos(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     };
 
     const handleDependenciaClick = () => {
@@ -45,6 +51,8 @@ const Navbar = () => {
         setShowBienvenida(false); 
         setShowReporte(false);
         setShowArticulos(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     };
 
     const handleUserClick = () => {
@@ -55,6 +63,8 @@ const Navbar = () => {
         setShowHoja(false);
         setShowReporte(false);
         setShowArticulos(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     };
     
     const handerArticulosClick = () => {
@@ -65,6 +75,8 @@ const Navbar = () => {
         setShowDependenciaAdd(false);
         setShowReporte(false);
         setShowHoja(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     }
 
     const handerBienvenidaClick = () => {
@@ -75,6 +87,8 @@ const Navbar = () => {
         setShowHoja(false);
         setShowReporte(false);
         setShowArticulos(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     }
     
 
@@ -86,6 +100,8 @@ const Navbar = () => {
         setShowUserAdd(false);
         setShowDependenciaAdd(false);
         setShowHoja(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     }
 
     const handerHojaClick = () => {
@@ -96,8 +112,34 @@ const Navbar = () => {
         setShowCargoAdd(false);
         setShowUserAdd(false);
         setShowDependenciaAdd(false);
+        setShowArtuculoUser(false);
+        setShowQr(false);
     }
 
+    
+    const handerArticuloUsuario = () => {
+        setShowArtuculoUser(true);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowQr(false);
+    }
+
+    const handerQR = () => {
+        setShowQr(true);
+        setShowArtuculoUser(false);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+    }
 
     const handleLogout = () => {
         navigate('/');
@@ -135,16 +177,17 @@ const Navbar = () => {
             {userRole === 'administrador' && (
                 <>
                     <li className="active">
-                        <a  href="#cargo" onClick={handleCargoClick}>
-                            <i className="bx bxs-user"></i>
-                            <span className="text">Agregar Cargo</span>
-                        </a>
-                    </li>
-                
-                    <li>
                         <a href="#dependencia" onClick={handleDependenciaClick}>
                             <i className="bx bxs-user"></i>
                             <span className="text">Agregar Dependencia</span>
+                        </a>
+                        
+                    </li>
+                
+                    <li>
+                        <a  href="#cargo" onClick={handleCargoClick}>
+                            <i className="bx bxs-user"></i>
+                            <span className="text">Agregar Cargo</span>
                         </a>
                     </li>
 
@@ -173,7 +216,7 @@ const Navbar = () => {
                     </li>
 
                     <li>
-                        <a href onClick={handerReporteClick}>
+                        <a href="#reporte" onClick={handerReporteClick}>
                             <i className='bx bxs-report'></i>
                             <span className="text">Reporte</span>
                         </a>
@@ -182,15 +225,15 @@ const Navbar = () => {
                 )}
                 {userRole === 'usuario' && (
                     <>
-                        <li>
-                            <a href="#servicio" onClick={handerHojaClick}>
+                        <li className="active">
+                            <a href="#servicio" onClick={handerArticuloUsuario}>
                                 <i className='bx bxs-spreadsheet'></i>
                                 <span className="text">Ver Tus Articulos</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href onClick={handerReporteClick}>
+                            <a href="#reporte" onClick={handerReporteClick}>
                                 <i className='bx bxs-report'></i>
                                 <span className="text">Tus Reportes</span>
                             </a>
@@ -200,8 +243,8 @@ const Navbar = () => {
             </ul>
 
             <ul className="side-menu">
-                <li>
-                    <a href=".">
+                <li> 
+                    <a href="#QR" onClick={handerQR}>
                         <i className='bx bx-qr-scan'></i>
                         <span className="text">QR</span>
                     </a>
@@ -244,6 +287,8 @@ const Navbar = () => {
                 {showArticulosAdd && <Articulos/> }
                 {showReporteAdd && <Reporte />}
                 {showHojaAdd && <HojaServicio/> }
+                {showArtuloUsuario && <ArticuloUsuario/>}
+                {showQR && <QR/>}
             </main>
         </section>
         </div>

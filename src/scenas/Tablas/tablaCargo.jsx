@@ -7,9 +7,15 @@ import AddCargo from '../../modal/addCargo';
 const columns = [
   { field: 'id_cargo', headerName: 'ID', width: 90 },
   {
+    field: 'nombre_dependencia',
+    headerName: 'Nombre de la dependencia',
+    width: 250,
+    editable: true,
+  },
+  {
     field: 'nombre_cargo',
     headerName: 'Nombre del Cargo',
-    width: 150,
+    width: 200,
     editable: true,
   },
   {
@@ -36,6 +42,7 @@ const CargoTab = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isAddUserOpen, setAddUserOpen] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
+  // const [ setSelectedUserData] = useState(null);
   const [intervalCount, setIntervalCount] = useState(0);
 
   const updateData = async () => {
@@ -112,6 +119,10 @@ const CargoTab = () => {
     window.history.back();
   };
 
+  const handleCancelModificar = () => {
+    setAddUserOpen(false);
+  }
+
   return(
     <div className='dataTable'>
         <DataGrid
@@ -171,13 +182,17 @@ const CargoTab = () => {
           )}
 
 
-      {isAddUserOpen && (
-        <AddCargo
-        //   setOpenModal={setAddUserOpen}
-        //   userData={selectedUserData}
-        setOpenModal={setAddUserOpen} updateCargoData={fetchData}
-        />
-      )}
+        {isAddUserOpen && (
+          <div className='confirmation-dialog'>
+            <div className='confirmation-dialog-1'>
+              <p>¿Modificar?</p>
+              <div className="footer">
+                <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
+                {/* <button onClick={handleConfirmDelete}>Aceptar</button> */}
+              </div>
+            </div>
+          </div>
+        )}
     </div>
   );
 }
