@@ -2,7 +2,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./style.css"
 
 import { useEffect, useState } from 'react';
-import AddUser from '../../modal/addUser';
+
 
 
 const columns = [
@@ -95,6 +95,7 @@ const ArticuloTab = () => {
         }
       };
       
+      
 
       useEffect(() => {
         fetchData();
@@ -113,7 +114,7 @@ const ArticuloTab = () => {
       const handleConfirmDelete = async () => {
         try {
           // Realiza la eliminación del usuario con el ID selectedUserId
-          const response = await fetch(`http://localhost:4000/usuarios/${selectedUserId}`, {
+          const response = await fetch(`http://localhost:4000/articulos/${selectedUserId}`, {
             method: 'DELETE',
           });
     
@@ -138,6 +139,10 @@ const ArticuloTab = () => {
         window.history.back();
       };
 
+      const handleCancelModificar = () => {
+        setAddUserOpen(false);
+      }
+
     return(
         <div className='dataTable'>
             <DataGrid
@@ -153,14 +158,14 @@ const ArticuloTab = () => {
                             <div className='view'>
                               <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row)} />
                             </div>
-                            <div className='delete' onClick={() => handleDeleteClick(params.row.id_usuario)}>
+                            <div className='delete' onClick={() => handleDeleteClick(params.row.id_articulo)}>
                               <img src='/delete.svg' alt='' />
                             </div>
                           </div>
                         ),
                       }
                     : column
-                )}
+                )} 
                 initialState={{
                 pagination: {
                     paginationModel: {
@@ -187,7 +192,7 @@ const ArticuloTab = () => {
               {isDialogOpen && (
                 <div className='confirmation-dialog'>
                       <div className='confirmation-dialog-1'>
-                        <p>¿Está seguro de que desea eliminar este usuario?</p>
+                        <p>¿Está seguro de que desea eliminar este Articulo?</p>
                         <div className="footer">
                           <button onClick={handleConfirmDelete}>Aceptar</button>
                           <button id="cancelBtn" onClick={handleCancelDelete}>Cancelar</button>
@@ -197,11 +202,17 @@ const ArticuloTab = () => {
               )}
 
 
+
                {isAddUserOpen && (
-                  <AddUser
-                    setOpenModal={setAddUserOpen}
-                    userData={selectedUserData}
-                  />
+                  <div className='confirmation-dialog'>
+                  <div className='confirmation-dialog-1'>
+                    <p>¿Modificar?</p>
+                    <div className="footer">
+                      <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
+                      {/* <button onClick={handleConfirmDelete}>Aceptar</button> */}
+                    </div>
+                  </div>
+                </div>
                 )}
 
                 

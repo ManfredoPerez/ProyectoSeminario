@@ -14,6 +14,7 @@ import HojaServicio from "../hojaServicico";
 import { useUserRole } from "../login/UserRoleContext";
 import ArticuloUsuario from "../articulosUsuario";
 import QR from "../QR";
+import QRUsuario from "../QRUsuario";
 
 const Navbar = () => {
     const { userRole } = useUserRole();
@@ -27,6 +28,7 @@ const Navbar = () => {
     const [showHojaAdd, setShowHoja] = useState(false);
     const [showArtuloUsuario, setShowArtuculoUser] = useState(false);
     const [showQR, setShowQr] = useState(false);
+    const [showQRUsuario, setShowQrUsuario] = useState(false);
 
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const navigate = useNavigate();
@@ -41,6 +43,7 @@ const Navbar = () => {
         setShowArticulos(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     };
 
     const handleDependenciaClick = () => {
@@ -53,6 +56,7 @@ const Navbar = () => {
         setShowArticulos(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     };
 
     const handleUserClick = () => {
@@ -65,6 +69,7 @@ const Navbar = () => {
         setShowArticulos(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     };
     
     const handerArticulosClick = () => {
@@ -77,6 +82,7 @@ const Navbar = () => {
         setShowHoja(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     }
 
     const handerBienvenidaClick = () => {
@@ -89,6 +95,7 @@ const Navbar = () => {
         setShowArticulos(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     }
     
 
@@ -102,6 +109,7 @@ const Navbar = () => {
         setShowHoja(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     }
 
     const handerHojaClick = () => {
@@ -114,6 +122,7 @@ const Navbar = () => {
         setShowDependenciaAdd(false);
         setShowArtuculoUser(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     }
 
     
@@ -127,10 +136,24 @@ const Navbar = () => {
         setShowUserAdd(false);
         setShowDependenciaAdd(false);
         setShowQr(false);
+        setShowQrUsuario(false);
     }
 
     const handerQR = () => {
         setShowQr(true);
+        setShowArtuculoUser(false);
+        setShowHoja(false);
+        setShowReporte(false);
+        setShowArticulos(false);
+        setShowBienvenida(false);
+        setShowCargoAdd(false);
+        setShowUserAdd(false);
+        setShowDependenciaAdd(false);
+        setShowQrUsuario(false);
+    }
+
+    const handerQRUsuario = () => {
+        setShowQrUsuario(true);
         setShowArtuculoUser(false);
         setShowHoja(false);
         setShowReporte(false);
@@ -243,13 +266,26 @@ const Navbar = () => {
             </ul>
 
             <ul className="side-menu">
-                <li> 
-                    <a href="#QR" onClick={handerQR}>
-                        <i className='bx bx-qr-scan'></i>
-                        <span className="text">QR</span>
-                    </a>
-                </li>
-
+                {userRole === 'administrador' && (
+                    <>
+                    <li> 
+                        <a href="#QR" onClick={handerQR}>
+                            <i className='bx bx-qr-scan'></i>
+                            <span className="text">QR</span>
+                        </a>
+                    </li>
+                    </>
+                    )}
+                    {userRole === 'usuario' && (
+                        <>
+                        <li> 
+                            <a href="#QR" onClick={handerQRUsuario}>
+                                <i className='bx bx-qr-scan'></i>
+                                <span className="text">QR</span>
+                            </a>
+                        </li>
+                        </>
+                    )}
                 <li>
                     <a href className="logout" onClick={handleLogout}>
                         <i className="bx bxs-log-out-circle"></i>
@@ -289,6 +325,7 @@ const Navbar = () => {
                 {showHojaAdd && <HojaServicio/> }
                 {showArtuloUsuario && <ArticuloUsuario/>}
                 {showQR && <QR/>}
+                {showQRUsuario && <QRUsuario/>}
             </main>
         </section>
         </div>

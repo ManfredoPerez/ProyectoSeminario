@@ -7,15 +7,15 @@ import AddCargo from '../../modal/addCargo';
 const columns = [
   { field: 'id_cargo', headerName: 'ID', width: 90 },
   {
-    field: 'nombre_dependencia',
-    headerName: 'Nombre de la dependencia',
-    width: 250,
-    editable: true,
-  },
-  {
     field: 'nombre_cargo',
     headerName: 'Nombre del Cargo',
     width: 200,
+    editable: true,
+  },
+  {
+    field: 'nombre_dependencia',
+    headerName: 'Nombre de la dependencia',
+    width: 250,
     editable: true,
   },
   {

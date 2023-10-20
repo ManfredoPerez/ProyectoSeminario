@@ -132,7 +132,7 @@ const UsuarioTabReport = () => {
       const generatePdf = () => {
         const doc = new jsPDF({ orientation: "landscape" });
     
-        const marginTop = 20;
+        const marginTop = 50;
         doc.text("Tarjeta de Responsabilidad", doc.internal.pageSize.getWidth() / 2, marginTop, { align: "center" });
         doc.text(
           `Nombre del Empleado Responsable: ${dataUser[0]?.nombre} ${dataUser[0]?.apellido}`,
@@ -142,6 +142,7 @@ const UsuarioTabReport = () => {
         doc.text(`Dependencia: ${dataUser[0]?.nombre_dependencia}`, 10, marginTop + 20);
         doc.text(`Cargo: ${dataUser[0]?.nombre_cargo}`, 10,marginTop + 30);
         doc.text("Código:", 10, marginTop + 40);
+        doc.text("Fecha:", 10, marginTop + 50);
     
         const headers = [
           "Código",
@@ -161,7 +162,7 @@ const UsuarioTabReport = () => {
           user.valor_baja,
           user.observaciones,
         ]);
-        doc.autoTable({ head: [headers], body: data, startY: marginTop + 50 });
+        doc.autoTable({ head: [headers], body: data, startY: marginTop + 60 });
     
         // Obtén el contenido del PDF como base64
         const pdfData = doc.output("datauristring");
@@ -189,6 +190,7 @@ const UsuarioTabReport = () => {
           [`Dependencia: ${dataUser[0]?.nombre_dependencia}`],
           [`Cargo: ${dataUser[0]?.nombre_cargo}`],
           ["Código:"],
+          ["Fecha:"],
           [],
           ["Código", "Cantidad", "Descripción", "Valor", "Total", "Valor Baja", "Observaciones"],
           ...dataUser.map((user) => [
@@ -273,6 +275,7 @@ const UsuarioTabReport = () => {
                         }
                     }}
                     pageSizeOptions={[5]}
+                    // checkboxSelection
                     disableRowSelectionOnClick
                     disableColumnFilter
                     disableDensitySelector

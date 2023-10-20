@@ -54,6 +54,21 @@ const AddUser = ({setOpenModal}) => {
 
   }, []);
 
+  const handleDependenciaChange = (e) => {
+    const selectedDependenciaId = e.target.value;
+    setUserData({ ...userData, id_dependencia: selectedDependenciaId });
+
+    // Realizar la solicitud para obtener los cargos relacionados con la dependencia seleccionada
+    fetch(`http://localhost:4000/cargos/cargosByDependencia?dependenciaId=${selectedDependenciaId}`)
+      .then(response => response.json())
+      .then(data => {
+        setCargos(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los cargos', error);
+      });
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -66,6 +81,7 @@ const AddUser = ({setOpenModal}) => {
   const handleSelectClose = () => {
     setIsRolSelectOpen(false);
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -130,6 +146,20 @@ const AddUser = ({setOpenModal}) => {
               />
           </div>
 
+          <div className="form-group">
+              <label for="exampleInputPassword1">Apellido</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="apellido"
+                name="apellido"
+                value={userData.apellido}
+                onChange={handleInputChange}
+                placeholder="Eje 'Ramos'"
+                required
+              />
+            </div>
+
           <div class="form-row"> 
             <div className="form-group col-md-6">
               <label for="exampleInputPassword1">Usuario</label>
@@ -145,33 +175,20 @@ const AddUser = ({setOpenModal}) => {
             </div>
 
             <div className="form-group col-md-6">
-              <label for="exampleInputPassword1">Apellido</label>
+              <label for="exampleInputPassword1">Contraseña</label>
               <input 
-                type="text" 
+                type="password" 
                 class="form-control" 
-                id="apellido"
-                name="apellido"
-                value={userData.apellido}
+                id="contrasena"
+                name="contrasena"
+                value={userData.contrasena}
                 onChange={handleInputChange}
-                placeholder="Eje 'Ramos'"
-                required
+                placeholder=""
               />
             </div>
 
           </div>
           
-          <div className="form-group">
-            <label for="exampleInputPassword1">Contraseña</label>
-            <input 
-              type="password" 
-              class="form-control" 
-              id="contrasena"
-              name="contrasena"
-              value={userData.contrasena}
-              onChange={handleInputChange}
-              placeholder=""
-            />
-          </div>
 
           <div className="form-row">
 
@@ -220,6 +237,22 @@ const AddUser = ({setOpenModal}) => {
 
           <div className="form-row">
             <div class="form-group col-md-6">
+              <label for="exampleFormControlSelect1">Dependencia</label>
+              <select 
+                class="form-control" 
+                value={userData.id_dependencia}
+                onChange={handleDependenciaChange}
+              >
+                <option value="">Elige una dependencia</option>
+                {dependencias.map(dependencia => (
+                  <option key={dependencia.id_dependencia} value={dependencia.id_dependencia}>
+                    {dependencia.nombre_dependencia} 
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div class="form-group col-md-6">
               <label for="exampleFormControlSelect1">Cargo</label>
               <select 
                 class="form-control" 
@@ -237,23 +270,7 @@ const AddUser = ({setOpenModal}) => {
               </select>
             </div>
 
-            <div class="form-group col-md-6">
-              <label for="exampleFormControlSelect1">Dependencia</label>
-              <select 
-                class="form-control" 
-                id="id_dependencia"
-                name="id_dependencia"
-                value={userData.id_dependencia}
-                onChange={handleInputChange}
-              >
-                <option value="">Elige una dependencia</option>
-                {dependencias.map(dependencia => (
-                  <option key={dependencia.id_dependencia} value={dependencia.id_dependencia}>
-                    {dependencia.nombre_dependencia} 
-                  </option>
-                ))}
-              </select>
-            </div>
+            
 
           </div>
 

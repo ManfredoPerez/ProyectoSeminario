@@ -1,17 +1,20 @@
-import { useUserId } from "../login/UserIdContext";
-
-
+import ArticulosUsuarioTab from "../Tablas/tablaArticuloUsuario";
 
 const ArticuloUsuario = () => {
 
-    const { userId } = useUserId();
-
-    return(
-        <div>
-            <h1>Holalala</h1>
-            <div>Id: {userId}</div>
+  return (
+    <div>
+     
+        <div className="container text-center mt-5" >
+          <h1>Artículos de Usuario</h1>
+          
+         
         </div>
-    )
-}
+        <ArticulosUsuarioTab slug="articulo-usuario" />
+       
+      </div>
+  
+  );
+};
 
 export default ArticuloUsuario;

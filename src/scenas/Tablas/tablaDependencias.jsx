@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react';
 
 
 const columns = [
-    { field: 'id_dependencia', headerName: 'ID', width: 90 },
-    // {
-    //     field: "avatar", headerName: "Avatar", width:100,
-    //     renderCell: (params)=> {
-    //         return <img src={params.row.img || "/logoMuni.png"} alt='' />
-    //     },
-    // },
+    { 
+      field: 'id_dependencia', 
+      headerName: 'ID', 
+      width: 90 
+    },
     {
       field: 'nombre_dependencia',
       headerName: 'Nombre de la dependencia',
@@ -21,7 +19,7 @@ const columns = [
     
     {
         field: "actions",
-        headerName: "Actions",
+        headerName: "Acciones",
         width: 100,
         renderCell: (params) => {
             return <div className='action'>
