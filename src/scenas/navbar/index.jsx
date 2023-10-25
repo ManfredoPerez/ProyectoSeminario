@@ -9,12 +9,12 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Bienvenida from "../bienvenida/binevenida";
 import Articulos from "../articulos";
-import Reporte from "../reporte";
 import HojaServicio from "../hojaServicico";
 import { useUserRole } from "../login/UserRoleContext";
 import ArticuloUsuario from "../articulosUsuario";
 import QR from "../QR";
 import QRUsuario from "../QRUsuario";
+import Historial from "../historial";
 
 const Navbar = () => {
     const { userRole } = useUserRole();
@@ -241,7 +241,7 @@ const Navbar = () => {
                     <li>
                         <a href="#reporte" onClick={handerReporteClick}>
                             <i className='bx bxs-report'></i>
-                            <span className="text">Reporte</span>
+                            <span className="text">Historial</span>
                         </a>
                     </li>
                 </>
@@ -255,12 +255,12 @@ const Navbar = () => {
                             </a>
                         </li>
 
-                        <li>
+                        {/* <li>
                             <a href="#reporte" onClick={handerReporteClick}>
                                 <i className='bx bxs-report'></i>
                                 <span className="text">Tus Reportes</span>
                             </a>
-                        </li>
+                        </li> */}
                     </>
                 )}
             </ul>
@@ -300,7 +300,7 @@ const Navbar = () => {
         <section id="content">
             <nav>
                 <i className='bx bx-menu' onClick={handleMenuToggle}></i>
-                <a href="/home" className="profile">
+                <a href className="profile">
                     <img src={xelaImage} alt="" />
                 </a>
                 <a href style={{cursor: "pointer"}} onClick={handerBienvenidaClick} className="nav-link"> <h4> <b>Tarjeta de Responsabilidad</b> </h4> </a>
@@ -310,7 +310,7 @@ const Navbar = () => {
                 <input type="checkbox" id="switch-mode" hidden/>
 			    <label for="switch-mode" class="switch-mode"></label>
 
-                <a href="." className="profile">
+                <a href className="profile">
                     <img src={xelaImage} alt="" />
                 </a>
             </nav>
@@ -321,7 +321,7 @@ const Navbar = () => {
                 {showCargoAdd && <CargoAdd />}
                 {showDependenciaAdd && <DependenciaAdd />}
                 {showArticulosAdd && <Articulos/> }
-                {showReporteAdd && <Reporte />}
+                {showReporteAdd && <Historial />}
                 {showHojaAdd && <HojaServicio/> }
                 {showArtuloUsuario && <ArticuloUsuario/>}
                 {showQR && <QR/>}

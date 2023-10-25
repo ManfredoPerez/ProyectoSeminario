@@ -2,20 +2,19 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./style.css";
 
 import { useEffect, useState } from 'react';
-import AddCargo from '../../modal/addCargo';
 
 const columns = [
   { field: 'id_cargo', headerName: 'ID', width: 90 },
   {
-    field: 'nombre_cargo',
-    headerName: 'Nombre del Cargo',
-    width: 200,
-    editable: true,
-  },
-  {
     field: 'nombre_dependencia',
     headerName: 'Nombre de la dependencia',
     width: 250,
+    editable: true,
+  },
+  {
+    field: 'nombre_cargo',
+    headerName: 'Nombre del Cargo',
+    width: 200,
     editable: true,
   },
   {
@@ -37,12 +36,13 @@ const columns = [
 ];
 
 const CargoTab = () => {
+  
   const [data, setData] = useState([]);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isAddUserOpen, setAddUserOpen] = useState(false);
-  const [selectedUserData, setSelectedUserData] = useState(null);
-  // const [ setSelectedUserData] = useState(null);
+  const [editedNombreCargo, setEditedNombreCargo] = useState(''); 
+  const [editingCargoId, setEditingCargoId] = useState(null);
   const [intervalCount, setIntervalCount] = useState(0);
 
   const updateData = async () => {
@@ -67,13 +67,16 @@ const CargoTab = () => {
         throw new Error('Error al obtener datos de la API');
       }
       const data = await response.json();
+      
 
-      const dataWithIds = data.map((item, index) => ({ ...item, id: index }));
-      setData(dataWithIds);
-    } catch (error) {
-      console.error('Error al obtener datos de la API:', error);
-    }
-  };
+   // Agrega un id único a cada fila basado en el índice
+   const dataWithIds = data.map((item, index) => ({ ...item, id: index }));
+      
+   setData(dataWithIds); // Actualiza el estado con los datos que tienen identificadores únicos
+ } catch (error) {
+   console.error('Error al obtener datos de la API:', error);
+ }
+};
 
   useEffect(() => {
     fetchData();
@@ -92,10 +95,22 @@ const CargoTab = () => {
     setDialogOpen(true);
   };
 
+
   const handleViewClick = (id_cargo) => {
-    setSelectedUserData(id_cargo);
-    setAddUserOpen(true);
+    const cargos = data.find((item) => item.id_cargo === id_cargo);
+    if (cargos) {
+      setEditedNombreCargo(cargos.nombre_cargo);
+      setEditingCargoId(id_cargo);
+      setAddUserOpen(true); // Abre el formulario de edición
+    }
   };
+  
+
+  useEffect(() => {
+    fetchData();
+  }, []); 
+
+
 
   const handleConfirmDelete = async () => {
     try {
@@ -113,7 +128,33 @@ const CargoTab = () => {
       console.error('Error al eliminar el cargo:', error);
     }
   };
-
+  const handleUpdateCargo = async (e) => {
+    e.preventDefault();
+    try {
+      // Crea un objeto con el campo 'nombre_cargo'
+      const cargoData = {
+        nombre_cargo: editedNombreCargo,
+      };
+      // Realiza una solicitud PUT para actualizar el campo 'nombre_cargo' del cargo
+      const response = await fetch(`http://localhost:4000/cargos/${editingCargoId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cargoData),
+      });
+  
+      if (response.ok) {
+        setAddUserOpen(false); // Cierra el formulario de edición
+        fetchData(); // Actualiza la lista de dependencias
+      } else {
+        console.error('Error al actualizar el cargo.');
+      }
+    } catch (error) {
+      console.error('Error al actualizar el cargo:', error);
+    }
+  };
+  
   const handleCancelDelete = () => {
     setDialogOpen(false);
     window.history.back();
@@ -136,7 +177,7 @@ const CargoTab = () => {
                     renderCell: (params) => (
                       <div className='action'>
                         <div className='view'>
-                          <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row)} />
+                          <img src="/view.svg" alt="" onClick={() => handleViewClick(params.row.id_cargo)} />
                         </div>
                         <div className='delete' onClick={() => handleDeleteClick(params.row.id_cargo)}>
                           <img src='/delete.svg' alt='' />
@@ -181,20 +222,29 @@ const CargoTab = () => {
             </div>
           )}
 
-
-        {isAddUserOpen && (
-          <div className='confirmation-dialog'>
-            <div className='confirmation-dialog-1'>
-              <p>¿Modificar?</p>
-              <div className="footer">
-                <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
-                {/* <button onClick={handleConfirmDelete}>Aceptar</button> */}
+          {isAddUserOpen && (
+            <div className='confirmation-dialog'>
+              <div className='confirmation-dialog-1'>
+                <h4>Editar Cargo</h4>
+                <form onSubmit={handleUpdateCargo}>
+                  <label>Nombre del Cargo:</label>
+                  <br></br>
+                  <input
+                    className="form-control"
+                    type="text"
+                    value={editedNombreCargo}
+                    onChange={(e) => setEditedNombreCargo(e.target.value)}
+                  />
+                   
+                  <div className="footer">
+                    <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
+                    <button type="submit">Editar</button>
+                  </div>
+                </form>
               </div>
             </div>
-          </div>
-        )}
-    </div>
-  );
+          )}
+        </div>
+    )
 }
-
 export default CargoTab;

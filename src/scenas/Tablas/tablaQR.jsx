@@ -79,7 +79,7 @@ const ArticuloQR = () => {
           
           const qrData  = await response.json();
           setQRData(qrData[0].qr);
-          console.log(setQRData)
+          // console.log(setQRData)
           
           // Actualiza el estado con la URL de la imagen QR
           // setQRData(qrDataString);
@@ -124,10 +124,7 @@ const ArticuloQR = () => {
             printWindow.close();
           };
         });
-      }
-      
-      
-      
+      }  
     };
 
     return (

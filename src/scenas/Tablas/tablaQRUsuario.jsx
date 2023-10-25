@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { useUserId } from "../login/UserIdContext";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import QRCode from "react-qr-code";
+import html2canvas from 'html2canvas';
+import "./style.css"
 
 const columns = [
+    {
+      field: 'id_articulo', 
+      headerName: 'ID', 
+      width: 70 
+    },
     { 
       field: 'codigo', 
       headerName: 'Codigo', 
@@ -80,7 +88,7 @@ const QRUsuarioTab = () => {
           
           const qrData  = await response.json();
           setQRData(qrData[0].qr);
-          console.log(setQRData)
+          // console.log(setQRData)
           
           // Actualiza el estado con la URL de la imagen QR
           // setQRData(qrDataString);
@@ -90,9 +98,38 @@ const QRUsuarioTab = () => {
         }
       };
 
+      const handleCancelVerQR = () => {
+        setAddUserOpen(false);
+      }
+
       useEffect(() => {
         fetchData();
        }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+       const handlePrint = () => {
+        const modal = document.querySelector('.printable-modal'); 
+  
+        if (modal) {
+          // Captura el contenido del modal como una imagen
+          html2canvas(modal).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+    
+            // Abre una ventana emergente con la imagen del código QR en tamaño de página media carta
+            const printWindow = window.open('', '', 'width=842,height=595');
+            printWindow.document.open();
+            printWindow.document.write(
+              `<img src="${imgData}" style="width: 50%; height: 40%;" />`
+            );
+            printWindow.document.close();
+    
+            // Espera 
+            printWindow.onload = () => {
+              printWindow.print();
+              printWindow.close();
+            };
+          });
+        }  
+      };
 
     return(
         <div className='dataTable'>
@@ -135,6 +172,21 @@ const QRUsuarioTab = () => {
                 disableDensitySelector
                 disableColumnSelector
             />
+
+            {isAddUserOpen && (
+                  <div className='confirmation-dialog' >
+                    <div className='confirmation-dialog-1' style={{width: "400px", height: "450px"}}>
+                      <div className="qr-image printable-modal">
+                        <QRCode value={qrData} size={300} />
+                      </div>
+                      <div className="footer" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <button id="cancelBtn" onClick={handleCancelVerQR}>Cancelar</button>
+                        <button onClick={handlePrint}>Impirmir</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
         </div>
     )
 }

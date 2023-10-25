@@ -8,13 +8,13 @@ import Navbar from "./scenas/navbar";
 import UserAdd from "./scenas/usuarios";
 import CargoAdd from "./scenas/cargo";
 import DependenciaAdd from "./scenas/dependencias";
-import Reporte from "./scenas/reporte";
 import Articulos from "./scenas/articulos";
 import HojaServicio from "./scenas/hojaServicico";
 import AddArticulo from "./modal/addArticulo";
 import AddUser from "./modal/addUser";
 import { UserRoleProvider } from "./scenas/login/UserRoleContext";
 import { UserIdProvider } from "./scenas/login/UserIdContext";
+import Historial from "./scenas/historial";
 
 function PrivateRoute({ element, isLoggedIn }) {
   return isLoggedIn ? element : <Navigate to="/" />;
@@ -52,7 +52,7 @@ function App() {
             <Route path="/home/articulos" element={<Articulos />}/>
           </Routes>
           <Routes>
-            <Route path="/home/reporte" element={<Reporte />}/>
+            <Route path="/home/historial" element={<Historial />}/>
           </Routes>
           <Routes>
             <Route path="/home/hojaServicio" element={<HojaServicio />}/>

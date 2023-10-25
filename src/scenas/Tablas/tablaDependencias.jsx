@@ -42,9 +42,8 @@ const DependenciaTab = () => {
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isAddUserOpen, setAddUserOpen] = useState(false);
-    // const [ setAddUserOpen] = useState(false);
-    const [selectedUserData, setSelectedUserData] = useState(null);
-    // const [setSelectedUserData] = useState(null);
+    const [editedNombreDependencia, setEditedNombreDependencia] = useState('');
+    const [editingDependenciaId, setEditingDependenciaId] = useState(null);
     const [intervalCount, setIntervalCount] = useState(0);
 
     const updateData = async () => {
@@ -98,8 +97,13 @@ const DependenciaTab = () => {
       };
     
       const handleViewClick = (id_dependencia) => {
-        setSelectedUserData(id_dependencia);
-        setAddUserOpen(true);
+        const dependencia = data.find((item) => item.id_dependencia === id_dependencia);
+        console.log("Dependencia: ", dependencia)
+        if (dependencia) {
+          setEditedNombreDependencia(dependencia.nombre_dependencia);
+          setEditingDependenciaId(id_dependencia);
+          setAddUserOpen(true); // Abre el formulario de edición
+        }
       };
 
   useEffect(() => {
@@ -120,6 +124,29 @@ const DependenciaTab = () => {
       }
     } catch (error) {
       console.error('Error al eliminar el cargo:', error);
+    }
+  };
+
+  const handleUpdateDependencia = async (e) => {
+    e.preventDefault();
+    try {
+      // Realiza una solicitud PUT para actualizar la dependencia con los nuevos datos
+      const response = await fetch(`http://localhost:4000/dependencia/${editingDependenciaId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nombre_dependencia: editedNombreDependencia }),
+      });
+  
+      if (response.ok) {
+        setAddUserOpen(false); // Cierra el formulario de edición
+        fetchData(); // Actualiza la lista de dependencias
+      } else {
+        console.error('Error al actualizar la dependencia.');
+      }
+    } catch (error) {
+      console.error('Error al actualizar la dependencia:', error);
     }
   };
 
@@ -193,11 +220,21 @@ const DependenciaTab = () => {
           {isAddUserOpen && (
             <div className='confirmation-dialog'>
               <div className='confirmation-dialog-1'>
-                <p>¿Está seguro de que desea eliminar esta Dependencia?</p>
-                  <h1>Usuario: {setData.nombre_dependencia} </h1>
-                <div className="footer">
-                  <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
-                </div>
+                <h4>Editar Dependencia</h4>
+                <form onSubmit={handleUpdateDependencia}>
+                  <label>Nombre de la Dependencia:</label>
+                  <br></br>
+                  <input
+                    className="form-control"
+                    type="text"
+                    value={editedNombreDependencia}
+                    onChange={(e) => setEditedNombreDependencia(e.target.value)}
+                  />
+                  <div className="footer">
+                    <button id="cancelBtn" onClick={handleCancelModificar}>Cancelar</button>
+                    <button type="submit">Editar</button>
+                  </div>
+                </form>
               </div>
             </div>
           )}

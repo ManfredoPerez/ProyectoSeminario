@@ -20,6 +20,7 @@ const AddArticulo = ({setOpenModal}) => {
     })
 
     const [usuarios, setUsuarios] = useState([]);
+    const [userid, setUseID ] = useState([]);
     const [showQR, setShowQR] = useState(false);
     // const qrRef = useRef(null);
     // const qrValueRef = useRef(null);
@@ -78,6 +79,27 @@ const AddArticulo = ({setOpenModal}) => {
         setShowQR(true);
       };
 
+      const fetchDataUSer = async () => {
+        try {
+          const response = await fetch(`http://localhost:4000/usuarios/${articuloData.id_usuario}`);
+          if (!response.ok) {
+            throw new Error('Error al obtener datos de la API');
+          }
+          const dataUser = await response.json();
+          
+          setUseID(dataUser[0]);
+          console.log(dataUser[0])
+        } catch (error) {
+          console.error('Error al obtener datos de la API:', error);
+        }
+      };
+
+      useEffect(() => {
+        if (articuloData.id_usuario) {
+          fetchDataUSer();
+        }
+      }, [articuloData.id_usuario]);
+
     useEffect(() => {
         fetch('http://localhost:4000/usuarios/')
         .then(response => response.json())
@@ -87,7 +109,8 @@ const AddArticulo = ({setOpenModal}) => {
         .catch(error => {
             console.error('Error al obtener los usuarios', error);
         });
-    })
+
+    }, []);
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
@@ -95,10 +118,10 @@ const AddArticulo = ({setOpenModal}) => {
     }
 
     const generateQRCode = () => {  
-
+        // const usuario = usuarios.find((user) => user.id_usuario === articuloData.id_usuario);
         const qrData = `
             USUARIO: 
-                ${articuloData.id_usuario}
+                ${userid.nombre} ${userid.apellido}
 
             CÓDIGO: 
                 ${articuloData.codigo}
@@ -182,8 +205,8 @@ const AddArticulo = ({setOpenModal}) => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
+                    
+                        <div className="form-group ">
                             <label for="exampleFormControlSelect1">Responsable </label>
                             <select 
                                 className="form-control" 
@@ -195,11 +218,16 @@ const AddArticulo = ({setOpenModal}) => {
                                 <option value="">Elige un responsable</option>
                                     {usuarios.map(usuario => (
                                     <option key={usuario.id_usuario} value={usuario.id_usuario}>
-                                         {usuario.codigo} {usuario.nombre} {usuario.apellido} 
+                                         {usuario.nombre} {usuario.apellido} {' <----> '} {usuario.nombre_dependencia} { '||' } {usuario.nombre_cargo}
                                     </option>
                                 ))}
                             </select>
                         </div>
+                        
+                        
+             
+
+                <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="inputPassword4">Codigo Articulo</label>
                             <input 
@@ -211,9 +239,7 @@ const AddArticulo = ({setOpenModal}) => {
                                 onChange={handleInputChange}
                                 placeholder="Eje '0025'"/>
                         </div>
-                    </div>
-
-                    <div className="form-group">
+                    <div className="form-group col-md-6">
                         <label for="inputAddress">Nombre Articulo</label>
                         <input 
                             type="text" 
@@ -224,7 +250,7 @@ const AddArticulo = ({setOpenModal}) => {
                             onChange={handleInputChange}
                             placeholder="Eje 'PC'"/>
                     </div>
-
+                </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="inputEmail4">No. serie</label>
